@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian-qemu
+FROM fzbasescu/cross-build-stretch
 
 RUN [ "cross-build-start" ]
 
@@ -11,8 +11,6 @@ RUN export DOTNET_CLI_TELEMETRY_OPTOUT=1 \
  && dotnet build --configuration ${CONFIGURATION} $(pwd)/MediaBrowser.sln \
  && dotnet publish --configuration ${CONFIGURATION} $(pwd)/MediaBrowser.sln --output /jellyfin
 
-RUN [ "cross-build-end" ]
-
 FROM microsoft/dotnet:2-runtime
 COPY --from=builder /jellyfin /jellyfin
 RUN apt update \
@@ -22,3 +20,5 @@ VOLUME /config /media
 ENV PUID=1000 PGID=1000
 ENTRYPOINT chown $PUID:$PGID /config /media \
  && gosu $PUID:$PGID dotnet /jellyfin/jellyfin.dll -programdata /config
+
+RUN [ "cross-build-end" ]
