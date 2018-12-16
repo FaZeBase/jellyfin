@@ -21,4 +21,4 @@ ENV PUID=1000 PGID=1000
 ENTRYPOINT chown $PUID:$PGID /config /media \
  && gosu $PUID:$PGID dotnet /jellyfin/jellyfin.dll -programdata /config
 
-RUN [ "cross-build-end" ]
+RUN /usr/bin/cross-build-end
