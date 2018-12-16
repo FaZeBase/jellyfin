@@ -1,6 +1,6 @@
 FROM resin/armv7hf-debian-qemu
 
-RUN resin-xbuild
+RUN ["resin-xbuild"]
 
 FROM microsoft/dotnet:2-sdk as builder
 WORKDIR /repo
@@ -21,4 +21,4 @@ ENV PUID=1000 PGID=1000
 ENTRYPOINT chown $PUID:$PGID /config /media \
  && gosu $PUID:$PGID dotnet /jellyfin/jellyfin.dll -programdata /config
 
-RUN resin-xbuild
+RUN ["resin-xbuild"]
