@@ -1,6 +1,6 @@
 FROM resin/armv7hf-debian-qemu
 
-RUN [ "./cross-build-start" ]
+RUN [ "cross-build-start" ]
 
 FROM microsoft/dotnet:2-sdk as builder
 WORKDIR /repo
