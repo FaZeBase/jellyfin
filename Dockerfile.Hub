@@ -1,4 +1,4 @@
-resin/armv7hf-debian
+FROM resin/armv7hf-debian
 
 RUN [ "cross-build-start" ]
 
