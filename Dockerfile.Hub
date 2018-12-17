@@ -1,6 +1,6 @@
 FROM resin/armv7hf-debian
 
-RUN [ "cross-build-start" ]
+RUN [ "./cross-build-start" ]
 
 FROM microsoft/dotnet:2-sdk as builder
 WORKDIR /repo
@@ -13,9 +13,9 @@ FROM microsoft/dotnet:2-runtime
 COPY --from=builder /jellyfin /jellyfin
 RUN apt update \
  && apt install -y ffmpeg gosu
-RUN [ "cross-build-end" ]
-EXPOSE 8096
+RUN [ "./cross-build-end" ]EXPOSE 8096
 VOLUME /config /media
 ENV PUID=1000 PGID=1000
 ENTRYPOINT chown $PUID:$PGID /config /media \
  && gosu $PUID:$PGID dotnet /jellyfin/jellyfin.dll -programdata /config
+RUN [ "./cross-build-end" ]
