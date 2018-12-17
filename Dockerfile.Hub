@@ -1,6 +1,4 @@
-FROM resin/armv7hf-debian-qemu
-
-RUN ["/usr/bin/cross-build-start"]
+FROM cmosh/alpine-arm
 
 FROM microsoft/dotnet:2-sdk as builder
 WORKDIR /repo
@@ -13,6 +11,7 @@ FROM microsoft/dotnet:2-runtime
 COPY --from=builder /jellyfin /jellyfin
 RUN apt update \
  && apt install -y ffmpeg gosu
+RUN [ "cross-build-end" ]
 EXPOSE 8096
 VOLUME /config /media
 ENV PUID=1000 PGID=1000
