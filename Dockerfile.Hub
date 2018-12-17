@@ -1,4 +1,6 @@
-FROM cmosh/alpine-arm
+resin/armv7hf-debian
+
+RUN [ "cross-build-start" ]
 
 FROM microsoft/dotnet:2-sdk as builder
 WORKDIR /repo
@@ -17,5 +19,3 @@ VOLUME /config /media
 ENV PUID=1000 PGID=1000
 ENTRYPOINT chown $PUID:$PGID /config /media \
  && gosu $PUID:$PGID dotnet /jellyfin/jellyfin.dll -programdata /config
-
-RUN ["/usr/bin/cross-build-end"]
